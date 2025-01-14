@@ -18,7 +18,7 @@ public class OrbTile : EffectTile
     {
         if (tile.directions.GetActiveDirectionCount() <= 0 || LevelManager.Instance.currentLevelID == LevelManager.Instance.levelEditorName) return;
 
-        if (!GameManager.save.game.collectedOrbs.Contains(LevelManager.Instance.currentLevelID)) GameManager.save.game.collectedOrbs.Add(LevelManager.Instance.currentLevelID);
+        // if (!GameManager.save.game.collectedOrbs.Contains(LevelManager.Instance.currentLevelID)) GameManager.save.game.collectedOrbs.Add(LevelManager.Instance.currentLevelID);
         LevelManager.Instance.RemoveTile(LevelManager.Instance.tilemapEffects.GetTile<OrbTile>(position));
     }
     

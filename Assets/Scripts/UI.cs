@@ -41,7 +41,6 @@ public class UI : MonoBehaviour
         editor.playtest = editor.self.transform.Find("Play Button").gameObject;
         editor.nextLevelField = editor.self.transform.Find("Next Level").Find("NL Field").GetComponent<InputField>();
         editor.remixLevelField = editor.self.transform.Find("Remix Level").Find("RL Field").GetComponent<InputField>();
-        editor.freeroamToggle = editor.self.transform.Find("Freeroam Toggle").GetComponent<Toggle>();
 
         // Win screen (intermission)
         // win = new() { self = transform.parent.Find("Intermissions").Find("Win Screen").gameObject };
@@ -308,7 +307,6 @@ public class UI : MonoBehaviour
         public GameObject playtest;
         public InputField nextLevelField;
         public InputField remixLevelField;
-        public Toggle freeroamToggle;
     }
 
     public class PreloadUI : UIObject

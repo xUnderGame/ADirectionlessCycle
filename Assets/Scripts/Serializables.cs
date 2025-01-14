@@ -94,15 +94,12 @@ public class Serializables
     public class GameData
     {
         public List<Level> levels = new();
-        public List<string> collectedOrbs; // stored as level ID's
-        public List<string> collectedFragments; // stored as level ID's
         public List<string> exhaustedDialog;
         public Mechanics mechanics = new();
         public bool unlockedWorldTwo = false;
         public bool unlockedWorldThree = false;
         public bool unlockedWorldSuper = false;
         public bool doPrologue = true;
-        public bool hasCompletedGame = false;
         public bool seenHintPopup = false;
 
         // A level
@@ -152,7 +149,6 @@ public class Serializables
         [Serializable]
         public class Mechanics
         {
-            public bool hasSwapUpgrade = false;
             public bool hasSeenRemix = false;
         }
     }

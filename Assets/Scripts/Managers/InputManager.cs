@@ -76,20 +76,6 @@ public class InputManager : MonoBehaviour
         // Null check
         if (debugCommand == null) return;
 
-        // Enable debug command
-        if (debugCommand == "adastra")
-        {
-            if (!GameManager.Instance.buildDebugMode)
-            {
-                GameManager.Instance.buildDebugMode = true;
-                UI.Instance.global.SendMessage("Debug enabled.", 3);
-            } else {
-                GameManager.Instance.buildDebugMode = false;
-                UI.Instance.global.SendMessage("Then so be it!", 3);
-            }
-            debugCommand = null;
-        }
-
         // Secret title command
         if (debugCommand == "UDLRLRUR")
         {
@@ -105,20 +91,6 @@ public class InputManager : MonoBehaviour
             debugCommand = null;
         }
 
-        // Game completed flag
-        if (debugCommand == "imacheater")
-        {
-            if (!GameManager.save.game.hasCompletedGame)
-            {
-                GameManager.save.game.hasCompletedGame = true;
-                UI.Instance.global.SendMessage("Ready for some challenges?", 3);
-            } else {
-                GameManager.save.game.hasCompletedGame = false;
-                UI.Instance.global.SendMessage("You've been redeemed.", 3);
-            }
-            debugCommand = null;
-        }
-
         // Delete savedata and generate a new one
         else if (debugCommand == "zero")
         {
@@ -126,15 +98,6 @@ public class InputManager : MonoBehaviour
             GameManager.Instance.DeleteSave();
             GameManager.Instance.CreateSave(true);
             UI.Instance.global.SendMessage("[ Game reset ]", 4);
-            debugCommand = null;
-        }
-
-        // Delete savedata and generate a new one
-        else if (debugCommand == "swap" && GameManager.Instance.buildDebugMode)
-        {
-            if (DebugConfirm()) return;
-            GameManager.save.game.mechanics.hasSwapUpgrade = true;
-            UI.Instance.global.SendMessage("[ New Ability Unlocked ]", 4);
             debugCommand = null;
         }
 
@@ -499,19 +462,7 @@ public class InputManager : MonoBehaviour
     // Changes the only tile active's form (might cause issues in the future?)
     private void OnChangeForms()
     {
-        if (!LevelManager.Instance.IsAllowedToPlay() || !GameManager.save.game.mechanics.hasSwapUpgrade) return;
 
-        List<GameTile> count = GetPlayableObjects();
-        if (count.Count > 1 || count.Count <= 0) return;
-
-        LevelManager.Instance.RemoveTile(count[0]);
-        if (count[0].GetTileType() == ObjectTypes.Hexagon) {
-            LevelManager.Instance.PlaceTile(LevelManager.Instance.CreateTile(latestTile.ToString(), count[0].directions, count[0].position));
-        }
-        else {
-            LevelManager.Instance.PlaceTile(LevelManager.Instance.CreateTile("Hexagon", count[0].directions, count[0].position));
-            latestTile = count[0].GetTileType();
-        }
     }
 
     // Custom level scene scrolling

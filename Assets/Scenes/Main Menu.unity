@@ -2850,7 +2850,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: ADC Internal
+  m_Text: ADC DEMO!
 --- !u!222 &2023218782
 CanvasRenderer:
   m_ObjectHideFlags: 0

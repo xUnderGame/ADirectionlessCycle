@@ -70,11 +70,11 @@ public class Editor : MonoBehaviour
         // Populate tile list
         GameObject editorTile = Resources.Load<GameObject>("Prefabs/Editor Tile");
         listVars.Add(new() { LevelManager.Instance.wallTile, LevelManager.Instance.antiwallTile });
-        listVars.Add(new() { LevelManager.Instance.boxTile, LevelManager.Instance.circleTile, LevelManager.Instance.hexagonTile, LevelManager.Instance.mimicTile });
-        listVars.Add(new() { LevelManager.Instance.areaTile, LevelManager.Instance.inverseAreaTile, LevelManager.Instance.outboundAreaTile });
+        listVars.Add(new() { LevelManager.Instance.boxTile, LevelManager.Instance.circleTile });
+        listVars.Add(new() { LevelManager.Instance.areaTile, LevelManager.Instance.inverseAreaTile });
         listVars.Add(new() { LevelManager.Instance.hazardTile, LevelManager.Instance.voidTile });
-        listVars.Add(new() { LevelManager.Instance.invertTile, LevelManager.Instance.arrowTile, LevelManager.Instance.negativeArrowTile, LevelManager.Instance.fragmentTile, LevelManager.Instance.orbTile });
-        listVars.Add(new() { LevelManager.Instance.levelTile, LevelManager.Instance.hologramTile, LevelManager.Instance.npcTile });
+        listVars.Add(new() { LevelManager.Instance.invertTile, LevelManager.Instance.arrowTile, LevelManager.Instance.negativeArrowTile });
+        listVars.Add(new() {  });
 
         // Loops for every tile type
         for (int i = 0; i < listStrings.Count; i++)
@@ -105,7 +105,6 @@ public class Editor : MonoBehaviour
         // Editor menu default values
         UI.Instance.editor.nextLevelField.text = LevelManager.Instance.currentLevel.nextLevel;
         UI.Instance.editor.remixLevelField.text = LevelManager.Instance.currentLevel.remixLevel;
-        UI.Instance.editor.freeroamToggle.isOn = LevelManager.Instance.currentLevel.freeroam;
 
         // Debug import level
         if (GameManager.Instance.IsDebug()) UI.Instance.editor.import.SetActive(true);

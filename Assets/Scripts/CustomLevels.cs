@@ -137,12 +137,12 @@ public class CustomLevels : MonoBehaviour
     // Close a level's menu
     public void CreateLevel()
     {
-        if (!GameManager.Instance.IsDebug() && !GameManager.save.game.hasCompletedGame)
-        {
-            UI.Instance.global.SendMessage("Complete the game first!");
-            CloseLevelMenu();
-            return;
-        }
+        // if (!GameManager.Instance.IsDebug() && !GameManager.save.game.hasCompletedGame)
+        // {
+        //     UI.Instance.global.SendMessage("Complete the game first!");
+        //     CloseLevelMenu();
+        //     return;
+        // }
 
         selectedLevelID = LevelManager.Instance.SaveLevel("New level", default, true, null);
         selectedLevelName = "New level";
@@ -171,12 +171,12 @@ public class CustomLevels : MonoBehaviour
     // Edit current level
     public void EditLevel()
     {
-        if (!GameManager.Instance.IsDebug() && !GameManager.save.game.hasCompletedGame)
-        {
-            UI.Instance.global.SendMessage("Complete the game first!");
-            CloseLevelMenu();
-            return;
-        }
+        // if (!GameManager.Instance.IsDebug() && !GameManager.save.game.hasCompletedGame)
+        // {
+        //     UI.Instance.global.SendMessage("Complete the game first!");
+        //     CloseLevelMenu();
+        //     return;
+        // }
 
         GameManager.Instance.currentEditorLevelID = selectedLevelID;
         GameManager.Instance.currentEditorLevelName = selectedLevelName;

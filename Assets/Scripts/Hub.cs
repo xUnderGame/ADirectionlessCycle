@@ -25,10 +25,10 @@ public class Hub : MonoBehaviour
     public Text levelName;
 
     private readonly int[] positions = { 0, -2200, -4400, -6600 };
-    private readonly List<int> completedLevelsCount = new() { 3, 3, 3, 0 };
-    private readonly List<int> completedReal = new() { 0, 0, 0, 0 };
-    private readonly List<int> completedRealRemix = new() { 0, 0, 0, 0 };
-    private readonly List<int> completedRealOutbound = new() { 0, 0, 0, 0 };
+    private readonly List<int> completedLevelsCount = new() { 3 };
+    private readonly List<int> completedReal = new() { 0 };
+    private readonly List<int> completedRealRemix = new() { 0 };
+    private readonly List<int> completedRealOutbound = new() { 0 };
     private readonly List<GameObject> remixList = new();
     private GameObject lastSelectedlevel = null;
     private Animator animator;
@@ -52,23 +52,15 @@ public class Hub : MonoBehaviour
         for (int count = 0; count < remixHolders.Count; count++) { PrepareHub(remixHolders[count], true, count); }
 
         // Achievements
-        if (completedReal[0] >= 12) GameManager.Instance.EditAchivement("ACH_COMPLETE_W1");
-        if (completedReal[1] >= 12) GameManager.Instance.EditAchivement("ACH_COMPLETE_W2"); // needs testing
-        if (completedReal[2] >= 12) GameManager.Instance.EditAchivement("ACH_COMPLETE_W3"); // needs testing
-        if (completedReal[3] >= 12) GameManager.Instance.EditAchivement("ACH_ORBS"); // needs testing
-        if (completedReal[0] >= 12 && completedReal[1] >= 12 && completedReal[2] >= 12) GameManager.Instance.EditAchivement("ACH_ALL_MAIN"); // needs testing
-
-        // Lock screen for levels
-        SetupLocks();
+        if (completedReal[0] >= 12) GameManager.Instance.EditAchivement("ACH_COMPLETE_DEMO");
 
         // Initial variables!
         if (!GameManager.save.game.mechanics.hasSeenRemix) remixCountText.gameObject.SetActive(false);
-        if (!GameManager.save.game.mechanics.hasSwapUpgrade) outboundCountText.gameObject.SetActive(false);
-        if (GameManager.save.game.collectedFragments.Count <= 0) fragmentCountText.gameObject.SetActive(false);
-        else fragmentCountText.text = $"{GameManager.save.game.collectedFragments.Count}/3";
+        outboundCountText.gameObject.SetActive(false);
+        fragmentCountText.gameObject.SetActive(false);
+
         completedCountText.text = $"{completedReal[worldIndex]}/12";
         remixCountText.text = $"{completedRealRemix[worldIndex]}/{remixHolders[worldIndex].transform.childCount}";
-        outboundCountText.text = $"{completedRealOutbound[worldIndex]}/?";
     }
 
     // Cycle through levels
@@ -84,7 +76,7 @@ public class Hub : MonoBehaviour
         }
 
         if (EventSystem.current.currentSelectedGameObject == null) return;
-        if (EventSystem.current.currentSelectedGameObject == backButton.gameObject || EventSystem.current.currentSelectedGameObject.name == "Unlock Button") {
+        if (EventSystem.current.currentSelectedGameObject == backButton.gameObject || EventSystem.current.currentSelectedGameObject.name == "Clarification") {
             remixList.ForEach(item => item.SetActive(false));
             HideRevealUI(false);
             switch (worldIndex) 
@@ -171,7 +163,7 @@ public class Hub : MonoBehaviour
                 // Check for the correct outline to use
                 Image outlineImg = outline.GetComponent<Image>();
                 if (GameManager.save.game.mechanics.hasSeenRemix && displayCheck == 1) outlineImg.color = GameManager.Instance.remixColor;
-                else if (GameManager.save.game.mechanics.hasSwapUpgrade && displayCheck == 2) outlineImg.color = GameManager.Instance.outboundColor;
+                // else if (GameManager.save.game.mechanics.hasSwapUpgrade && displayCheck == 2) outlineImg.color = GameManager.Instance.outboundColor;
                 else outlineImg.color = GameManager.Instance.completedColor; // for remixes!
             }
         }
@@ -213,38 +205,6 @@ public class Hub : MonoBehaviour
         if (remixSelection == 2 || remixSelection == 0) animator.Play("Revert Top", 0);
         if (remixSelection == 1 || remixSelection == 0) animator.Play("Revert Bottom", 1);
         if (arrows) animator.Play("Arrows Out", 5);
-    }
-
-    private void SetupLocks()
-    {
-        if (GameManager.Instance.IsDebug()) UI.Instance.global.SendMessage("(Hub debug unlock)");
-
-        // World 2
-        bool spikes = false;
-        Transform wLock = locks.Find("W2");
-        if (!GameManager.save.game.unlockedWorldTwo && !GameManager.Instance.IsDebug())
-        {
-            wLock.Find("Amount").GetComponent<Text>().text = $"{completedReal[0]}/9";
-            foreach (Transform level in worldHolders[1].transform)
-                { level.GetComponent<Button>().interactable = false; }
-        }
-        else {
-            spikes = true;
-            wLock.gameObject.SetActive(false);
-        }
-
-        // World 3
-        wLock = locks.Find("W3");
-        if (spikes) { wLock.Find("Spikes").gameObject.SetActive(true); wLock.Find("Filler").gameObject.SetActive(false); }
-        if (!GameManager.save.game.unlockedWorldThree && !GameManager.Instance.IsDebug())
-        {
-            wLock.Find("Amount").GetComponent<Text>().text = $"{completedReal[1]}/9";
-            foreach (Transform level in worldHolders[2].transform)
-                { level.GetComponent<Button>().interactable = false; }
-        } else wLock.gameObject.SetActive(false);
-
-        // add debug later please
-        // if (!GameManager.save.game.unlockedWorldSuper) Debug.Log("Not yet! (SW)");
     }
 
     // Now as a function for mouse hovers!
@@ -333,14 +293,6 @@ public class Hub : MonoBehaviour
                 break;
         }
 
-        // Update world completions
-        completedCountText.text = $"{completedReal[worldIndex]}/12";
-        if (worldIndex <= 2)
-        {
-            remixCountText.text = $"{completedRealRemix[worldIndex]}/{remixHolders[worldIndex].transform.childCount}";
-            outboundCountText.text = $"{completedRealOutbound[worldIndex]}/?";
-        }
-
         // Update checker direction
         checker.dirX = direction;
         
@@ -424,6 +376,7 @@ public class Hub : MonoBehaviour
 
         // We jump to the next level, if current level has a remix level.
         SerializableLevel current = LevelManager.Instance.GetLevel(remix, false, true);
+        if (current == null) return;
         if (!LevelManager.Instance.IsStringEmptyOrNull(current.remixLevel) && GameManager.save.game.levels.Find(l => l.levelID == current.remixLevel) != null) UIRecursiveRemixes(current.remixLevel, level, count + 1);
         else if (GameManager.Instance.IsDebug() && !LevelManager.Instance.IsStringEmptyOrNull(current.remixLevel)) UIRecursiveRemixes(current.remixLevel, level, count + 1);
     }

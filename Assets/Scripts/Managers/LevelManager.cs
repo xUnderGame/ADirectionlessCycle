@@ -118,7 +118,7 @@ public class LevelManager : MonoBehaviour
         antiwallTile = Resources.Load<AntiWallTile>("Tiles/Solids/Anti Wall");
         boxTile = Resources.Load<BoxTile>("Tiles/Objects/Box");
         circleTile = Resources.Load<CircleTile>("Tiles/Objects/Circle");
-        hexagonTile = Resources.Load<HexagonTile>("Tiles/Objects/Hexagon");
+        hexagonTile = null;
         mimicTile = Resources.Load<MimicTile>("Tiles/Objects/Mimic");
         areaTile = Resources.Load<WinAreaTile>("Tiles/Areas/Area");
         inverseAreaTile = Resources.Load<InverseWinAreaTile>("Tiles/Areas/Inverse Area");
@@ -128,10 +128,10 @@ public class LevelManager : MonoBehaviour
         invertTile = Resources.Load<InvertTile>("Tiles/Effects/Invert");
         arrowTile = Resources.Load<ArrowTile>("Tiles/Effects/Arrow");
         negativeArrowTile = Resources.Load<NegativeArrowTile>("Tiles/Effects/Negative Arrow");
-        orbTile = Resources.Load<OrbTile>("Tiles/Effects/Orb");
-        fragmentTile = Resources.Load<FragmentTile>("Tiles/Effects/Fragment");
-        levelTile = Resources.Load<LevelTile>("Tiles/Customs/Level");
-        hologramTile = Resources.Load<HologramTile>("Tiles/Customs/Hologram");
+        orbTile = null;
+        fragmentTile = null;
+        levelTile = null;
+        hologramTile = null;
         npcTile = Resources.Load<NPCTile>("Tiles/Customs/NPC");
 
         // Defaults
@@ -371,8 +371,8 @@ public class LevelManager : MonoBehaviour
         if (level == null) return;
 
         // Disallow fragment and orb spawning
-        if (GameManager.save.game.collectedOrbs.Contains(currentLevelID)) level.effectTiles = level.effectTiles.FindAll(tile => { return tile.type != "Orb"; });
-        if (GameManager.save.game.collectedFragments.Contains(currentLevelID)) level.effectTiles = level.effectTiles.FindAll(tile => { return tile.type != "Fragment"; });
+        // if (GameManager.save.game.collectedOrbs.Contains(currentLevelID)) level.effectTiles = level.effectTiles.FindAll(tile => { return tile.type != "Orb"; });
+        // if (GameManager.save.game.collectedFragments.Contains(currentLevelID)) level.effectTiles = level.effectTiles.FindAll(tile => { return tile.type != "Fragment"; });
 
         // Build the level
         level.solidTiles.ForEach(tile => PlaceTile(CreateTile(tile.type, tile.directions, tile.position)));
@@ -461,15 +461,10 @@ public class LevelManager : MonoBehaviour
             // X POSITION: -14 / +14.
             // Y POSITION: -8 / +8.
             // TODO: noMove = true; (Freeze object tiles from the new room, except ones coming from old room)
-            bool ach = false;
-            if (tile.position.x < 0 + worldOffsetX) { MoveTilemaps(new Vector3(14, 0)); worldOffsetX -= 14; ach = true; }
-            else if (tile.position.x > boundsX + worldOffsetX) { MoveTilemaps(new Vector3(-14, 0)); worldOffsetX += 14; ach = true; }
-            else if (tile.position.y > 0 + worldOffsetY) { MoveTilemaps(new Vector3(0, -8)); worldOffsetY += 8; ach = true; }
-            else if (tile.position.y < boundsY + worldOffsetY) { MoveTilemaps(new Vector3(0, 8)); worldOffsetY -= 8; ach = true; }
-
-            // Achievement (will retrigger multiple times, maybe bad?)
-            // we don't use "GameManager.save.game.mechanics.hasSwapUpgrade", you can get out without.
-            if (ach && !currentLevel.hideUI) GameManager.Instance.EditAchivement("ACH_FIRST_OUTERBOUND");
+            if (tile.position.x < 0 + worldOffsetX) { MoveTilemaps(new Vector3(14, 0)); worldOffsetX -= 14; }
+            else if (tile.position.x > boundsX + worldOffsetX) { MoveTilemaps(new Vector3(-14, 0)); worldOffsetX += 14; }
+            else if (tile.position.y > 0 + worldOffsetY) { MoveTilemaps(new Vector3(0, -8)); worldOffsetY += 8; }
+            else if (tile.position.y < boundsY + worldOffsetY) { MoveTilemaps(new Vector3(0, 8)); worldOffsetY -= 8; }
         }
 
         // Removes from movement queue
@@ -683,9 +678,6 @@ public class LevelManager : MonoBehaviour
         foreach (GameTile tile in toDestroy) { RemoveTile(tile); }
         if (toDestroy.Count > 0) AudioManager.Instance.PlaySFX(AudioManager.tileDeath, 0.45f);
 
-        // Achievement (will retrigger multiple times, maybe bad?)
-        if (levelObjects.All(tile => tile.directions.GetActiveDirectionCount() == 0)) GameManager.Instance.EditAchivement("ACH_DIRECTIONLESS");
-
         // Win check, add one move to the player
         if (validation.Contains(true)) levelMoves++;
         else RemoveUndoFrame();
@@ -785,7 +777,6 @@ public class LevelManager : MonoBehaviour
             // First remix level?
             if (!GameManager.save.game.mechanics.hasSeenRemix)
             {
-                GameManager.Instance.EditAchivement("ACH_FIRST_INVERSE");
                 GameManager.save.game.mechanics.hasSeenRemix = true;
             }
 
@@ -802,9 +793,6 @@ public class LevelManager : MonoBehaviour
         // If won, do the thing
         if (winCondition && !DialogManager.Instance.inDialog)
         {
-            // Level 1 achievement
-            if (currentLevelID == "W1/1-1" && levelMoves <= 6) GameManager.Instance.EditAchivement("ACH_SIXMOVES");
-
             // Level savedata
             GameData.LevelChanges changes = new(true, false, (float)Math.Round(levelTimer, 2), levelMoves);
             GameManager.Instance.UpdateSavedLevel(currentLevelID, changes, true);

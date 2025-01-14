@@ -18,7 +18,7 @@ public class FragmentTile : EffectTile
     {
         if (tile.directions.GetActiveDirectionCount() <= 0 || LevelManager.Instance.currentLevelID == LevelManager.Instance.levelEditorName) return;
 
-        if (!GameManager.save.game.collectedFragments.Contains(LevelManager.Instance.currentLevelID)) GameManager.save.game.collectedFragments.Add(LevelManager.Instance.currentLevelID);
+        // if (!GameManager.save.game.collectedFragments.Contains(LevelManager.Instance.currentLevelID)) GameManager.save.game.collectedFragments.Add(LevelManager.Instance.currentLevelID);
         LevelManager.Instance.RemoveTile(LevelManager.Instance.tilemapEffects.GetTile<FragmentTile>(position));
     }
     
