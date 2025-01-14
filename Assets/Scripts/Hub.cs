@@ -246,7 +246,11 @@ public class Hub : MonoBehaviour
         
         // Stuff for super world.
         var level = GameManager.save.game.levels.Find(level => level.levelID == "W3/3-12");
-        if (worldIndex + direction == 3) if (level != null) if (!level.completed) return;
+        if (worldIndex + direction == 3)
+        {
+            if (level == null) return;
+            if (!level.completed) return;
+        }
 
         // Move!!! (animation, i know im repeating two switches.)
         switch (worldIndex)
