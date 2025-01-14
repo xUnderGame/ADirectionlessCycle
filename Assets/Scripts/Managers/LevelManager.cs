@@ -131,7 +131,7 @@ public class LevelManager : MonoBehaviour
         orbTile = null;
         fragmentTile = null;
         levelTile = null;
-        hologramTile = null;
+        hologramTile = Resources.Load<HologramTile>("Tiles/Customs/Hologram");
         npcTile = Resources.Load<NPCTile>("Tiles/Customs/NPC");
 
         // Defaults
