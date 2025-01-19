@@ -299,7 +299,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 777098593}
     m_SelectOnDown: {fileID: 247285169}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 1417924359}
+    m_SelectOnRight: {fileID: 1815548187}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
@@ -575,7 +575,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 32048900}
     m_SelectOnDown: {fileID: 515087478}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 1417924359}
+    m_SelectOnRight: {fileID: 1815548187}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
@@ -811,7 +811,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 247285169}
     m_SelectOnDown: {fileID: 782700900}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 1417924359}
+    m_SelectOnRight: {fileID: 1815548187}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
@@ -1105,7 +1105,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 782700900}
     m_SelectOnDown: {fileID: 32048900}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 1417924359}
+    m_SelectOnRight: {fileID: 1815548187}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
@@ -1322,7 +1322,7 @@ MonoBehaviour:
     m_SelectOnUp: {fileID: 515087478}
     m_SelectOnDown: {fileID: 777098593}
     m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 1417924359}
+    m_SelectOnRight: {fileID: 1815548187}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
@@ -1748,7 +1748,7 @@ RectTransform:
   m_GameObject: {fileID: 1100587221}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 32048897}
@@ -1778,7 +1778,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 42efd89561ebd2d48bf4ce914e5296ba, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 97b9981c09ab2a643bef6b4a478ee704, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1852,7 +1852,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1417924358
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2588,7 +2588,7 @@ MonoBehaviour:
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 1417924359}
+    m_SelectOnLeft: {fileID: 777098593}
     m_SelectOnRight: {fileID: 777098593}
   m_Transition: 1
   m_Colors:
